@@ -1,12 +1,12 @@
 db.air_alliances.aggregate([
   {
     $lookup:
-     {
-       from: "air_routes",
-       localField: "airlines",
-       foreignField: "airline.name",
-       as: "alliancesRoutes",
-     },
+      {
+        from: "air_routes",
+        localField: "airlines",
+        foreignField: "airline.name",
+        as: "alliancesRoutes",
+      },
   },
   { $unwind: "$alliancesRoutes" },
   {
@@ -14,17 +14,17 @@ db.air_alliances.aggregate([
   },
   {
     $group:
-    {
-      _id: "$name",
-      totalRotas: { $sum: 1 },
-    },
+      {
+        _id: "$name",
+        totalRotas: { $sum: 1 },
+      },
   },
   {
     $project:
-    {
-      _id: 1,
-      totalRotas: { $sum: 1 },
-    },
+      {
+        _id: 1,
+        totalRotas: { $sum: 1 },
+      },
   },
   { $sort: { totalRotas: -1 } },
   { $limit: 1 },
